@@ -9,15 +9,15 @@ router.get('/', function(req, res, next) {
   // Convert x back to float after rounding to two decimals
   x = parseFloat(x);
 
-  // Choose the function to apply based on the last digit of your ID (7)
-   // Since your last digit is 7, we will apply all three functions
+  // Clamp the value of x for asin to stay within the range [-1, 1]
+  let validX = Math.max(-1, Math.min(1, x)); // Ensure asin argument is in valid range for asin
 
-  // Apply all three functions and round the result to 2 decimal places
-  let resultAsin = Math.asin(x).toFixed(2);
-  let resultAsinh = Math.asinh(x).toFixed(2);
-  let resultCos = Math.cos(x).toFixed(2);
+  // Apply the functions
+  let resultAsin = Math.asin(validX).toFixed(2); // Valid asin result after clamping
+  let resultAsinh = Math.asinh(x).toFixed(2); // Asinh is valid for all real values
+  let resultCos = Math.cos(x).toFixed(2); // Cosine is valid for all real values
 
-  // Generate the response string with rounded results
+  // Generate the response string with results
   let responseMessage = `
     Math.asin(${x}) = ${resultAsin} <br>
     Math.asinh(${x}) = ${resultAsinh} <br>
